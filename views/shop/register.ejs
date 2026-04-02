@@ -1,0 +1,12 @@
+<%- include('../partials/header') %>
+<section class="container py-5" style="max-width: 500px;">
+  <h1 class="h3 mb-4">Create account</h1>
+  <% if (error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+  <form method="POST" action="/register" class="vstack gap-3">
+    <input class="form-control" name="name" placeholder="Full name" required>
+    <input type="email" class="form-control" name="email" placeholder="Email" required>
+    <input type="password" class="form-control" name="password" placeholder="Password" required>
+    <button class="btn btn-dark">Register</button>
+  </form>
+</section>
+<%- include('../partials/footer') %>
