@@ -1,32 +1,79 @@
-# Hi there, I'm Ali ! 👋
+# Maison Minimal — Single Vendor Fashion E-commerce
 
-Welcome to my GitHub space where code meets creativity and blockchain dreams come alive. I'm a blockchain developer driven by the belief that decentralized technology can create a more secure, transparent, and equitable digital future.
+A clean, fashion-first e-commerce platform built with simple technology for easy deployment on cPanel.
 
-## About Me
+## Tech Stack
 
-I’m passionate about crafting smart contracts and decentralized applications that not only function flawlessly but also offer a delightful user experience. Whether I'm diving deep into Solidity or exploring new blockchain ecosystems, I'm always up for a coding adventure!
+- Node.js + Express
+- EJS templates (HTML/CSS/JS)
+- Bootstrap 5 for consistent UI
+- MySQL (mysql2)
+- Session-based auth
 
-## What I Do
+## Features
 
-- **Smart Contract Development:** Crafting secure and efficient contracts using Solidity.
-- **Decentralized Applications (DApps):** Building user-friendly interfaces that interact seamlessly with blockchain back-ends via Ethers.js.
-- **Blockchain Infrastructure:** Experimenting with Ethereum, Hyperledger, and other emerging platforms to push the boundaries of what's possible.
+### Customer
+- Home page with fashion hero + featured products
+- Product listing with category/search/sort filters
+- Product detail with size variants and stock visibility
+- Shopping cart (session-based)
+- Checkout and order placement
+- Login/Register + order history
 
-## Projects
+### Admin
+- Dashboard with sales/order/low-stock overview
+- Product management (create + enable/disable)
+- Order management (status updates)
 
-- **Paroos:** A blockchain-driven fractional crowd-investing platform for real estate, built on Polygon, Ethers.js, Solidity, Next.js, and NestJS.
-- **Infalytics:** An AI-based BI tool that leverages NLP to perform 2D, 3D, geospatial visualizations and interactive dashboards.
-- **Blockchain Semester Project:** A blockchain-based real estate marketplace.
-- **MyNotaryDoc:** A freelance project where I developed an online remote notarization platform using EVS, Zoom, and Vouched.
+## Getting Started
 
-Each project is a learning journey and an opportunity to collaborate with amazing minds in the blockchain community.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
+2. Configure environment:
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` with your MySQL credentials.
 
-## Education
+3. Create a MySQL database and set `DB_NAME` accordingly.
 
-- **Ghulam Ishaq Khan Institute of Engineering Sciences and Technology** — B.S. in Electrical engineering(Electronics), Class of 2025
+4. Initialize schema + seed data:
+   ```bash
+   npm run db:init
+   ```
 
-## Connect with Me
+5. Start the app:
+   ```bash
+   npm run dev
+   ```
+   or
+   ```bash
+   npm start
+   ```
 
-I love connecting with fellow tech enthusiasts and blockchain innovators. Feel free to drop me a line at aliturabulhussnain1122911@gmail.com or reach out on [LinkedIn](www.linkedin.com/in/ali-turab-ul-hussnain-888892212). Whether it’s discussing the next big idea or just saying hello, I'm always excited to chat!
+## Default Admin
 
+- Email: value of `ADMIN_EMAIL` in `.env` (default `admin@fashionbrand.com`)
+- Password: value of `ADMIN_PASSWORD` in `.env` (default `admin123`)
+
+## cPanel Deployment Guide
+
+1. Upload project files to your cPanel hosting.
+2. In cPanel, create MySQL database + user and grant privileges.
+3. Use **Setup Node.js App** and point startup file to `server.js`.
+4. Add environment variables in cPanel:
+   - `NODE_ENV=production`
+   - `PORT` (provided by cPanel app manager)
+   - `SESSION_SECRET`
+   - `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`
+5. Run `npm install` in app directory.
+6. Run `npm run db:init` once to create tables and seed initial records.
+7. Restart Node.js app from cPanel.
+
+## Notes
+
+- This is intentionally lightweight and simple for maintainability.
+- Stripe integration can be added in a next phase by extending checkout/payment tables.
