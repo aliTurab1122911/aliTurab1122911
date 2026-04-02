@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+<section class="container py-5">
+  <h1 class="h2 mb-4">Orders</h1>
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead><tr><th>ID</th><th>Customer</th><th>Email</th><th>Total</th><th>Status</th><th>Update</th></tr></thead>
+      <tbody>
+        <% items.forEach((order) => { %>
+          <tr>
+            <td>#<%= order.id %></td>
+            <td><%= order.customer_name %></td>
+            <td><%= order.customer_email %></td>
+            <td>$<%= Number(order.total_amount).toFixed(2) %></td>
+            <td class="text-capitalize"><%= order.status %></td>
+            <td>
+              <form method="POST" action="/admin/orders/<%= order.id %>/status" class="d-flex gap-2">
+                <select class="form-select form-select-sm" name="status">
+                  <% ['pending','paid','shipped','delivered','cancelled'].forEach((state) => { %>
+                    <option value="<%= state %>" <%= order.status === state ? 'selected' : '' %>><%= state %></option>
+                  <% }) %>
+                </select>
+                <button class="btn btn-sm btn-outline-dark">Save</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<%- include('../partials/footer') %>

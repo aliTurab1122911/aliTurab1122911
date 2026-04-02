@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+<section class="hero text-white d-flex align-items-center">
+  <div class="container">
+    <p class="text-uppercase letter-space">New Season</p>
+    <h1 class="display-4 fw-semibold mb-3">Clean silhouettes for modern wardrobes</h1>
+    <a href="/products" class="btn btn-light btn-lg">Shop Collection</a>
+  </div>
+</section>
+
+<section class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0">Featured Pieces</h2>
+    <a href="/products" class="link-dark">View all</a>
+  </div>
+  <div class="row g-4">
+    <% featured.forEach((product) => { %>
+      <div class="col-12 col-md-6 col-lg-3">
+        <a href="/products/<%= product.slug %>" class="card product-card h-100 text-decoration-none text-dark">
+          <img src="<%= product.image_url %>" class="card-img-top" alt="<%= product.name %>">
+          <div class="card-body">
+            <p class="small text-muted mb-1"><%= product.category_name || 'Collection' %></p>
+            <h3 class="h6"><%= product.name %></h3>
+            <p class="small text-muted"><%= product.short_description || '' %></p>
+            <p class="fw-semibold mb-0">$<%= Number(product.price).toFixed(2) %></p>
+          </div>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
