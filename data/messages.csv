@@ -1,5 +1,0 @@
-message_id,session_id,role,text,timestamp
-m1,s_demo_1,user,What is this platform?,2026-04-01T10:00:10.000Z
-m2,s_demo_1,assistant,This is a simple AI-driven chatbot platform built with Next.js and CSV storage.,2026-04-01T10:00:11.000Z
-m3,s_demo_2,user,Can this run on Vercel?,2026-04-01T11:00:10.000Z
-m4,s_demo_2,assistant,Yes the frontend and API routes are designed for Vercel deployment.,2026-04-01T11:00:11.000Z
