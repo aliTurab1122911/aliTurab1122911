@@ -2,6 +2,7 @@
 <section class="container py-5" style="max-width: 500px;">
   <h1 class="h3 mb-4">Create account</h1>
   <% if (error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+  <% if (info) { %><div class="alert alert-info"><%= info %></div><% } %>
   <form method="POST" action="/register" class="vstack gap-3">
     <input class="form-control" name="name" placeholder="Full name" required>
     <input type="email" class="form-control" name="email" placeholder="Email" required>

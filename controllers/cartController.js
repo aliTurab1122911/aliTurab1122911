@@ -1,4 +1,6 @@
 const db = require('../config/db');
+const mockData = require('../data/mockData');
+const { isDbUnavailable } = require('../utils/dbFallback');
 
 function getCart(req) {
   if (!req.session.cart) req.session.cart = [];
@@ -14,23 +16,42 @@ async function showCart(req, res) {
 async function addToCart(req, res) {
   const { productId, variantId, quantity } = req.body;
   const qty = Math.max(Number(quantity) || 1, 1);
+  let selected;
 
-  const [rows] = await db.query(
-    `SELECT p.id AS product_id, p.name, p.slug, p.price,
-            v.id AS variant_id, v.size, v.stock,
-            COALESCE(pi.image_url, 'https://via.placeholder.com/600x800?text=No+Image') AS image_url
-     FROM products p
-     JOIN product_variants v ON v.product_id = p.id
-     LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.is_primary = 1
-     WHERE p.id = ? AND v.id = ?`,
-    [productId, variantId]
-  );
+  try {
+    const [rows] = await db.query(
+      `SELECT p.id AS product_id, p.name, p.slug, p.price,
+              v.id AS variant_id, v.size, v.stock,
+              COALESCE(pi.image_url, 'https://via.placeholder.com/600x800?text=No+Image') AS image_url
+       FROM products p
+       JOIN product_variants v ON v.product_id = p.id
+       LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.is_primary = 1
+       WHERE p.id = ? AND v.id = ?`,
+      [productId, variantId]
+    );
 
-  if (!rows.length) {
-    return res.status(400).render('shop/error', { message: 'Invalid product selection.' });
+    if (!rows.length) {
+      return res.status(400).render('shop/error', { message: 'Invalid product selection.' });
+    }
+    selected = rows[0];
+  } catch (error) {
+    if (!isDbUnavailable(error)) throw error;
+    const fallback = mockData.findVariant(variantId);
+    if (!fallback || Number(fallback.product.id) !== Number(productId)) {
+      return res.status(400).render('shop/error', { message: 'Invalid product selection.' });
+    }
+    selected = {
+      product_id: fallback.product.id,
+      name: fallback.product.name,
+      slug: fallback.product.slug,
+      price: fallback.product.price,
+      variant_id: fallback.variant.id,
+      size: fallback.variant.size,
+      stock: fallback.variant.stock,
+      image_url: fallback.product.image_url
+    };
   }
 
-  const selected = rows[0];
   const cart = getCart(req);
   const existing = cart.find((item) => item.variantId === selected.variant_id);
 

@@ -36,4 +36,7 @@
     </div>
   </div>
 </nav>
+<% if (typeof demoMode !== "undefined" && demoMode) { %>
+  <div class="alert alert-warning text-center rounded-0 mb-0">Demo mode: MySQL is not connected yet. Front-end preview is active.</div>
+<% } %>
 <main>

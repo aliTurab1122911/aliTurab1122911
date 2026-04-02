@@ -77,3 +77,11 @@ A clean, fashion-first e-commerce platform built with simple technology for easy
 
 - This is intentionally lightweight and simple for maintainability.
 - Stripe integration can be added in a next phase by extending checkout/payment tables.
+
+
+## Demo Mode (No Database Yet)
+
+- If MySQL is not configured/reachable, the app still boots and renders the storefront with built-in sample data.
+- Cart and checkout still work in session-only demo mode so you can preview UI/flow immediately.
+- As soon as MySQL is connected, the app automatically uses real database-backed data and full persistence.
+- Demo admin login: `admin@demo.com` (any password).
