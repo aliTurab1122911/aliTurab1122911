@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import path from 'path';
 import Papa from 'papaparse';
+import { appendCsvRow, ensureCsv } from '@/lib/csv';
 
 export async function POST(request: Request) {
+  await ensureCsv('training_data.csv', ['id', 'question', 'answer', 'keywords']);
+
   const form = await request.formData();
   const file = form.get('file');
 
@@ -30,8 +31,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: `Missing columns: ${missing.join(', ')}` }, { status: 400 });
   }
 
-  const destination = path.join(process.cwd(), 'data', 'training_data.csv');
-  await writeFile(destination, text, 'utf-8');
+  for (const row of parsed.data) {
+    await appendCsvRow('training_data.csv', {
+      id: row.id ?? '',
+      question: row.question ?? '',
+      answer: row.answer ?? '',
+      keywords: row.keywords ?? ''
+    });
+  }
 
-  return NextResponse.json({ ok: true, rows: parsed.data.length });
+  return NextResponse.json({ ok: true, rows: parsed.data.length, mode: 'appended' });
 }

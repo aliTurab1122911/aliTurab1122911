@@ -32,7 +32,7 @@ export default function TrainingUpload() {
       }}
     >
       <input type="file" name="file" accept=".csv,text/csv" required />
-      <button className="btn" type="submit" disabled={busy}>
+      <button className="button-30" type="submit" disabled={busy}>
         {busy ? 'Uploading...' : 'Upload & Train'}
       </button>
       {message ? <span className="small">{message}</span> : null}

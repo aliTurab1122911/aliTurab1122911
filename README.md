@@ -1,22 +1,15 @@
 # AI-Driven Chatbot System (Next.js Monolith + CSV)
 
-A clean and simple chatbot platform built with Next.js.
-
-## Tech
-- Next.js (single monorepo app)
-- TypeScript
-- CSV files for all storage
+A clean and simple chatbot platform built with Next.js, glassmorphism UI, and CSV storage only.
 
 ## Features
-- Chat UI
-- Upload your training CSV and use it immediately
-- Session/message logging to CSV
-- Feedback logging to CSV
-- History and dataset pages
+- Chat UI with gradient + glassmorphism styling
+- Upload your CSV dataset to train the chatbot (append mode)
+- Clear training dataset from the Datasets page
+- Every chat session and message stored as dataset rows in CSV
+- Full training table view (not limited to 30 rows)
 
-## CSV Training Format
-Upload a CSV with these headers:
-
+## Training CSV Format
 ```csv
 id,question,answer,keywords
 1,What is this?,This is a chatbot.,chatbot intro
@@ -32,8 +25,8 @@ Open http://localhost:3000
 
 ## Deploy
 - Push to GitHub
-- Import project into Vercel
-- Deploy as a regular Next.js project
+- Import in Vercel
+- Deploy as a standard Next.js project
 
 ## Notes
-This is intentionally simple and generic. It uses file-based CSV writes, which are ideal for local development and demos.
+This project is intentionally simple and generic. It writes CSV files locally for demo/dev workflows.

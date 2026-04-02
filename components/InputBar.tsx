@@ -21,7 +21,7 @@ export default function InputBar({ onSend, disabled }: { onSend: (value: string)
         placeholder="Ask something..."
         onChange={(event) => setText(event.target.value)}
       />
-      <button className="btn" type="submit" disabled={disabled || !text.trim()}>
+      <button className="button-30" type="submit" disabled={disabled || !text.trim()}>
         Send
       </button>
     </form>

@@ -7,26 +7,29 @@ export default async function HistoryPage() {
   return (
     <section className="card">
       <h2>Session History</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Session ID</th>
-            <th>Created</th>
-            <th>Last Active</th>
-            <th>Topic</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sessions.map((session) => (
-            <tr key={session.session_id}>
-              <td>{session.session_id}</td>
-              <td>{session.created_at}</td>
-              <td>{session.last_active_at}</td>
-              <td>{session.topic}</td>
+      <p className="small">All sessions are persisted in CSV and shown as a dataset.</p>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Session ID</th>
+              <th>Created</th>
+              <th>Last Active</th>
+              <th>Topic</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sessions.map((session) => (
+              <tr key={session.session_id}>
+                <td>{session.session_id}</td>
+                <td>{session.created_at}</td>
+                <td>{session.last_active_at}</td>
+                <td>{session.topic}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }

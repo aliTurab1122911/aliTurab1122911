@@ -47,7 +47,7 @@ export default function ChatWindow({ initialSessionId }: { initialSessionId: str
     <div className="card">
       <div className="row" style={{ justifyContent: 'space-between' }}>
         <strong>Session: {sessionId}</strong>
-        <button className="btn" onClick={startNewSession}>
+        <button className="button-30" onClick={startNewSession}>
           New Chat
         </button>
       </div>

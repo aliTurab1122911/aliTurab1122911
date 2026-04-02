@@ -10,7 +10,7 @@ export default async function HomePage() {
       <section className="card">
         <h2>Upload Training CSV</h2>
         <p className="small">
-          CSV must include headers: <code>id,question,answer,keywords</code>. Uploading replaces existing training data.
+          CSV must include headers: <code>id,question,answer,keywords</code>. Upload appends rows to existing training data.
         </p>
         <TrainingUpload />
       </section>
