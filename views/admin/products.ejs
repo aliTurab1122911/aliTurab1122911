@@ -14,16 +14,15 @@
       </div>
       <div class="col-md-12"><input class="form-control" name="shortDescription" placeholder="Short description"></div>
       <div class="col-md-12"><textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea></div>
-      <div class="col-md-4"><input class="form-control" name="imageUrl" placeholder="Image URL"></div>
-      <div class="col-md-4"><input type="file" class="form-control" name="imageFile" accept="image/*"></div>
-      <div class="col-md-4"><input class="form-control" name="sizeStock" placeholder="S:10,M:8,L:12"></div>
+      <div class="col-md-6"><input type="file" class="form-control" name="imageFile" accept="image/*"></div>
+      <div class="col-md-6"><input class="form-control" name="sizeStock" placeholder="S:10,M:8,L:12"></div>
       <div class="col-12"><button class="btn btn-dark">Create Product</button></div>
     </form>
   </div>
 
   <div class="table-responsive">
     <table class="table">
-      <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Status</th><th></th></tr></thead>
+      <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
       <tbody>
         <% items.forEach((item) => { %>
           <tr>
@@ -31,7 +30,8 @@
             <td><%= item.category_name || '-' %></td>
             <td>$<%= Number(item.price).toFixed(2) %></td>
             <td><span class="badge <%= item.is_active ? 'bg-success' : 'bg-secondary' %>"><%= item.is_active ? 'Active' : 'Hidden' %></span></td>
-            <td>
+            <td class="d-flex gap-2">
+              <a class="btn btn-sm btn-outline-primary" href="/admin/products/<%= item.id %>/edit">Edit</a>
               <form method="POST" action="/admin/products/<%= item.id %>/toggle">
                 <button class="btn btn-sm btn-outline-dark"><%= item.is_active ? 'Disable' : 'Enable' %></button>
               </form>

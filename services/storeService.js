@@ -31,6 +31,11 @@ async function getProductBySlug(slug) {
   return products.find((p) => p.slug === slug);
 }
 
+async function getProductById(id) {
+  const products = await getProducts();
+  return products.find((p) => p.id === Number(id));
+}
+
 async function getVariantsByProductId(productId) {
   const { rows } = await readTable('variants');
   return rows
@@ -134,7 +139,7 @@ async function createProduct(input) {
     price: String(input.price),
     short_description: input.shortDescription || '',
     description: input.description || '',
-    image_url: input.imageUrl,
+    image_url: input.imagePath,
     is_active: '1',
     created_at: new Date().toISOString()
   });
@@ -155,6 +160,40 @@ async function createProduct(input) {
 
   await writeTable('products', productTable.headers, productTable.rows);
   await writeTable('variants', variantTable.headers, variantTable.rows);
+}
+
+async function updateProduct(id, input) {
+  const productTable = await readTable('products');
+  const variantTable = await readTable('variants');
+  const row = productTable.rows.find((p) => Number(p.id) === Number(id));
+  if (!row) return;
+
+  const slug = slugify(input.name);
+  row.name = input.name;
+  row.slug = slug;
+  row.category_id = String(input.categoryId || '');
+  row.price = String(input.price);
+  row.short_description = input.shortDescription || '';
+  row.description = input.description || '';
+  if (input.imagePath) row.image_url = input.imagePath;
+
+  const remaining = variantTable.rows.filter((v) => Number(v.product_id) !== Number(id));
+  let variantId = nextId(remaining);
+  const pairs = (input.sizeStock || 'S:10,M:10,L:10').split(',').map((x) => x.trim()).filter(Boolean);
+  for (const pair of pairs) {
+    const [size, stock] = pair.split(':');
+    if (!size) continue;
+    remaining.push({
+      id: String(variantId++),
+      product_id: String(id),
+      size: size.trim().toUpperCase(),
+      stock: String(Number(stock || 0)),
+      sku: `${slug}-${size.trim().toUpperCase()}`
+    });
+  }
+
+  await writeTable('products', productTable.headers, productTable.rows);
+  await writeTable('variants', variantTable.headers, remaining);
 }
 
 async function toggleProduct(id) {
@@ -178,6 +217,7 @@ module.exports = {
   getCategories,
   getProducts,
   getProductBySlug,
+  getProductById,
   getVariantsByProductId,
   getVariantById,
   findUserByEmail,
@@ -188,6 +228,7 @@ module.exports = {
   getOrderById,
   updateOrderStatus,
   createProduct,
+  updateProduct,
   toggleProduct,
   dashboardStats
 };

@@ -7,6 +7,8 @@ const { requireAuth } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/', shopController.home);
+router.get('/about', shopController.about);
+router.get('/contact', shopController.contact);
 router.get('/products', shopController.products);
 router.get('/products/:slug', shopController.productDetail);
 

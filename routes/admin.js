@@ -20,6 +20,8 @@ router.use(requireAdmin);
 router.get('/', controller.dashboard);
 router.get('/products', controller.products);
 router.post('/products', upload.single('imageFile'), controller.createProduct);
+router.get('/products/:id/edit', controller.showEditProduct);
+router.post('/products/:id/edit', upload.single('imageFile'), controller.updateProduct);
 router.post('/products/:id/toggle', controller.toggleProduct);
 
 router.get('/orders', controller.orders);

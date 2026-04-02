@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+<section class="container py-5">
+  <h1 class="h2 mb-4">Edit Product</h1>
+  <form method="POST" action="/admin/products/<%= product.id %>/edit" class="row g-3" enctype="multipart/form-data">
+    <div class="col-md-6"><input class="form-control" name="name" value="<%= product.name %>" required></div>
+    <div class="col-md-3"><input type="number" step="0.01" class="form-control" name="price" value="<%= product.price %>" required></div>
+    <div class="col-md-3">
+      <select class="form-select" name="categoryId">
+        <% categories.forEach((cat) => { %>
+          <option value="<%= cat.id %>" <%= Number(product.category_id) === Number(cat.id) ? 'selected' : '' %>><%= cat.name %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="col-md-12"><input class="form-control" name="shortDescription" value="<%= product.short_description %>"></div>
+    <div class="col-md-12"><textarea class="form-control" name="description" rows="4"><%= product.description %></textarea></div>
+    <div class="col-md-6"><input type="file" class="form-control" name="imageFile" accept="image/*"></div>
+    <div class="col-md-6"><input class="form-control" name="sizeStock" value="<%= sizeStock %>" placeholder="S:10,M:8,L:12"></div>
+    <div class="col-12"><button class="btn btn-dark">Save Changes</button></div>
+  </form>
+</section>
+<%- include('../partials/footer') %>

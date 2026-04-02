@@ -42,8 +42,18 @@ async function productDetail(req, res) {
   return res.render('shop/product-detail', { product, images, variants, demoMode: false });
 }
 
+function about(req, res) {
+  res.render('shop/about');
+}
+
+function contact(req, res) {
+  res.render('shop/contact');
+}
+
 module.exports = {
   home,
   products,
-  productDetail
+  productDetail,
+  about,
+  contact
 };

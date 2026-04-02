@@ -1,7 +1,7 @@
 # Maison Minimal — CSV-Based Single Vendor Fashion E-commerce
 
 A clean, fashion-first e-commerce platform built with simple technology and **no database**.
-All persistent data is stored in CSV files (spreadsheet-friendly) directly inside the repository.
+All persistent data is stored in CSV files directly inside the repository.
 
 ## Tech Stack
 
@@ -10,7 +10,7 @@ All persistent data is stored in CSV files (spreadsheet-friendly) directly insid
 - Bootstrap 5 for consistent UI
 - CSV files for persistence
 - Session-based auth + cart
-- Multer for admin image upload
+- Multer for product image uploads
 
 ## Features
 
@@ -22,10 +22,12 @@ All persistent data is stored in CSV files (spreadsheet-friendly) directly insid
 - Checkout and fake order placement (no payment gateway)
 - Register/login/logout
 - View order history
+- About page and Contact page
 
 ### Admin
 - Dashboard (orders, sales, low stock)
-- Add products (image URL or upload image file)
+- Add products via direct image upload (saved in `public/uploads`)
+- Edit existing products (name, price, category, description, size-stock map, image)
 - Toggle product visibility
 - Update order statuses
 
@@ -39,8 +41,6 @@ The app stores data in `data/*.csv`:
 - `users.csv`
 - `orders.csv`
 - `order_items.csv`
-
-You can open/edit these with Excel/Google Sheets if needed.
 
 ## Getting Started
 
@@ -67,14 +67,8 @@ You can open/edit these with Excel/Google Sheets if needed.
 - Email: `admin@fashionbrand.com`
 - Password: `admin123`
 
-## Product Image Uploads
-
-- Uploaded images are stored in: `public/uploads/`
-- Admin can either provide an image URL or upload a local image file.
-
 ## cPanel Deployment Notes
 
 - This app is monolithic and does not require MySQL.
 - Upload repository, run `npm install`, set up Node app with startup file `server.js`, and start.
 - Ensure `public/uploads` is writable by the Node process.
-

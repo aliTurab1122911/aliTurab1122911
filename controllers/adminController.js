@@ -24,8 +24,8 @@ async function products(req, res) {
 }
 
 async function createProduct(req, res) {
-  const { name, price, categoryId, shortDescription, description, imageUrl, sizeStock } = req.body;
-  const uploadedImage = req.file ? `/uploads/${req.file.filename}` : null;
+  const { name, price, categoryId, shortDescription, description, sizeStock } = req.body;
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : 'https://via.placeholder.com/600x800?text=No+Image';
 
   await store.createProduct({
     name,
@@ -33,7 +33,37 @@ async function createProduct(req, res) {
     categoryId,
     shortDescription,
     description,
-    imageUrl: uploadedImage || imageUrl || 'https://via.placeholder.com/600x800?text=No+Image',
+    imagePath,
+    sizeStock
+  });
+
+  res.redirect('/admin/products');
+}
+
+async function showEditProduct(req, res) {
+  const [product, categories, variants] = await Promise.all([
+    store.getProductById(req.params.id),
+    store.getCategories(),
+    store.getVariantsByProductId(req.params.id)
+  ]);
+
+  if (!product) return res.status(404).render('shop/error', { message: 'Product not found' });
+
+  const sizeStock = variants.map((v) => `${v.size}:${v.stock}`).join(',');
+  res.render('admin/edit-product', { product, categories, sizeStock });
+}
+
+async function updateProduct(req, res) {
+  const { name, price, categoryId, shortDescription, description, sizeStock } = req.body;
+  const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+  await store.updateProduct(req.params.id, {
+    name,
+    price,
+    categoryId,
+    shortDescription,
+    description,
+    imagePath,
     sizeStock
   });
 
@@ -59,6 +89,8 @@ module.exports = {
   dashboard,
   products,
   createProduct,
+  showEditProduct,
+  updateProduct,
   toggleProduct,
   orders,
   updateOrderStatus
