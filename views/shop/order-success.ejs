@@ -1,0 +1,8 @@
+<%- include('../partials/header') %>
+<section class="container py-5 text-center">
+  <h1 class="display-6">Thank you for your order</h1>
+  <p class="text-muted">Order #<%= order.id %> was placed on <%= new Date(order.created_at).toLocaleDateString() %>.</p>
+  <p class="h4">Total: $<%= Number(order.total_amount).toFixed(2) %></p>
+  <a href="/products" class="btn btn-dark mt-3">Continue Shopping</a>
+</section>
+<%- include('../partials/footer') %>
