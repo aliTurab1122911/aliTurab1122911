@@ -1,32 +1,80 @@
-# Hi there, I'm Ali ! 👋
+# Maison Minimal — CSV-Based Single Vendor Fashion E-commerce
 
-Welcome to my GitHub space where code meets creativity and blockchain dreams come alive. I'm a blockchain developer driven by the belief that decentralized technology can create a more secure, transparent, and equitable digital future.
+A clean, fashion-first e-commerce platform built with simple technology and **no database**.
+All persistent data is stored in CSV files (spreadsheet-friendly) directly inside the repository.
 
-## About Me
+## Tech Stack
 
-I’m passionate about crafting smart contracts and decentralized applications that not only function flawlessly but also offer a delightful user experience. Whether I'm diving deep into Solidity or exploring new blockchain ecosystems, I'm always up for a coding adventure!
+- Node.js + Express
+- EJS templates (HTML/CSS/JS)
+- Bootstrap 5 for consistent UI
+- CSV files for persistence
+- Session-based auth + cart
+- Multer for admin image upload
 
-## What I Do
+## Features
 
-- **Smart Contract Development:** Crafting secure and efficient contracts using Solidity.
-- **Decentralized Applications (DApps):** Building user-friendly interfaces that interact seamlessly with blockchain back-ends via Ethers.js.
-- **Blockchain Infrastructure:** Experimenting with Ethereum, Hyperledger, and other emerging platforms to push the boundaries of what's possible.
+### Customer
+- Home page with featured products
+- Product listing with category/search/sort
+- Product detail with size variants
+- Add to cart/update/remove cart items
+- Checkout and fake order placement (no payment gateway)
+- Register/login/logout
+- View order history
 
-## Projects
+### Admin
+- Dashboard (orders, sales, low stock)
+- Add products (image URL or upload image file)
+- Toggle product visibility
+- Update order statuses
 
-- **Paroos:** A blockchain-driven fractional crowd-investing platform for real estate, built on Polygon, Ethers.js, Solidity, Next.js, and NestJS.
-- **Infalytics:** An AI-based BI tool that leverages NLP to perform 2D, 3D, geospatial visualizations and interactive dashboards.
-- **Blockchain Semester Project:** A blockchain-based real estate marketplace.
-- **MyNotaryDoc:** A freelance project where I developed an online remote notarization platform using EVS, Zoom, and Vouched.
+## CSV Storage
 
-Each project is a learning journey and an opportunity to collaborate with amazing minds in the blockchain community.
+The app stores data in `data/*.csv`:
 
+- `categories.csv`
+- `products.csv`
+- `variants.csv`
+- `users.csv`
+- `orders.csv`
+- `order_items.csv`
 
-## Education
+You can open/edit these with Excel/Google Sheets if needed.
 
-- **Ghulam Ishaq Khan Institute of Engineering Sciences and Technology** — B.S. in Electrical engineering(Electronics), Class of 2025
+## Getting Started
 
-## Connect with Me
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-I love connecting with fellow tech enthusiasts and blockchain innovators. Feel free to drop me a line at aliturabulhussnain1122911@gmail.com or reach out on [LinkedIn](www.linkedin.com/in/ali-turab-ul-hussnain-888892212). Whether it’s discussing the next big idea or just saying hello, I'm always excited to chat!
+2. Start the app:
+   ```bash
+   npm run dev
+   ```
+   or
+   ```bash
+   npm start
+   ```
+
+3. Open:
+   - Storefront: `http://localhost:3000`
+   - Admin: login then visit `http://localhost:3000/admin`
+
+## Default Admin Login
+
+- Email: `admin@fashionbrand.com`
+- Password: `admin123`
+
+## Product Image Uploads
+
+- Uploaded images are stored in: `public/uploads/`
+- Admin can either provide an image URL or upload a local image file.
+
+## cPanel Deployment Notes
+
+- This app is monolithic and does not require MySQL.
+- Upload repository, run `npm install`, set up Node app with startup file `server.js`, and start.
+- Ensure `public/uploads` is writable by the Node process.
 
