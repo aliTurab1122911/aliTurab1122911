@@ -14,8 +14,9 @@ export default function ChatWindow({ initialSessionId }: { initialSessionId: str
   const [sessionId, setSessionId] = useState(initialSessionId);
   const [messages, setMessages] = useState<UiMessage[]>([]);
   const [busy, setBusy] = useState(false);
+  const [status, setStatus] = useState('');
 
-  async function startNewSession() {
+  async function startNewSession(note?: string) {
     const response = await fetch('/api/sessions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -24,10 +25,18 @@ export default function ChatWindow({ initialSessionId }: { initialSessionId: str
     const data = (await response.json()) as { sessionId: string };
     setSessionId(data.sessionId);
     setMessages([]);
+    if (note) setStatus(note);
+  }
+
+  async function endChat() {
+    setBusy(true);
+    await startNewSession('Chat ended. A fresh session has started.');
+    setBusy(false);
   }
 
   async function onSend(value: string) {
     setBusy(true);
+    setStatus('');
     const userMessage: UiMessage = { id: crypto.randomUUID(), role: 'user', text: value };
     setMessages((prev) => [...prev, userMessage]);
 
@@ -47,10 +56,17 @@ export default function ChatWindow({ initialSessionId }: { initialSessionId: str
     <div className="card">
       <div className="row" style={{ justifyContent: 'space-between' }}>
         <strong>Session: {sessionId}</strong>
-        <button className="button-30" onClick={startNewSession}>
-          New Chat
-        </button>
+        <div className="row">
+          <button className="button-30" onClick={() => startNewSession()} disabled={busy}>
+            New Chat
+          </button>
+          <button className="button-30" onClick={endChat} disabled={busy}>
+            End Chat
+          </button>
+        </div>
       </div>
+
+      {status ? <p className="small">{status}</p> : null}
 
       <div className="messages" style={{ marginTop: 10 }}>
         {messages.length === 0 ? <p className="small">No messages yet. Start chatting.</p> : null}

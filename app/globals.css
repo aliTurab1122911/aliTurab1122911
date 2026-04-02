@@ -11,9 +11,14 @@ body {
   font-family: Inter, Arial, Helvetica, sans-serif;
   margin: 0;
   color: var(--text);
-  background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 40%, #06b6d4 100%);
   min-height: 100vh;
+  transition: background 1.2s ease;
 }
+
+body.theme-a { background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 40%, #06b6d4 100%); }
+body.theme-b { background: linear-gradient(135deg, #1f2937 0%, #7c3aed 45%, #22d3ee 100%); }
+body.theme-c { background: linear-gradient(135deg, #052e16 0%, #0f766e 45%, #f97316 100%); }
+body.theme-d { background: linear-gradient(135deg, #3b0764 0%, #be123c 45%, #0ea5e9 100%); }
 
 .topbar {
   display: flex;
@@ -31,7 +36,6 @@ body {
 .topbar nav { display: flex; gap: 10px; }
 .topbar a { color: #f8fbff; text-decoration: none; opacity: 0.9; }
 .topbar a:hover { opacity: 1; }
-
 .container { max-width: 1100px; margin: 0 auto; padding: 0 16px 40px; }
 
 .card {
@@ -78,11 +82,7 @@ body {
   transform: translateY(-2px);
 }
 
-.button-30:active {
-  box-shadow: #d6d6e7 0 3px 7px inset;
-  transform: translateY(2px);
-}
-
+.button-30:active { box-shadow: #d6d6e7 0 3px 7px inset; transform: translateY(2px); }
 .button-30:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .input, .textarea {

@@ -1,5 +1,6 @@
 import './globals.css';
 import Link from 'next/link';
+import GradientThemeController from '@/components/GradientThemeController';
 
 export const metadata = {
   title: 'CSV Chatbot',
@@ -10,6 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <GradientThemeController />
         <header className="topbar">
           <h1>CSV Chatbot Platform</h1>
           <nav>
