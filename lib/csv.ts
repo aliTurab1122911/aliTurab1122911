@@ -1,5 +1,5 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import fs from "fs/promises";
+import path from "path";
 import Papa from "papaparse";
 
 const writeQueues = new Map<string, Promise<void>>();

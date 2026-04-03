@@ -1,4 +1,4 @@
-import crypto from "node:crypto";
+import crypto from "crypto";
 
 const MAX_AGE = 60 * 60 * 24 * 7;
 
