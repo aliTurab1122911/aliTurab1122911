@@ -1,3 +1,4 @@
 id,username,email,password_hash,full_name,role,avatar,created_at,status
-user_admin,admin,admin@example.com,scrypt$4d9eb07dfca44f773133491d275daf42$8d745a7cdc62af7463e3cf45c2c87213a36b3b2887bd9efef4637ec959023064aea2fbca34b6e1e41bb20b6463b3cdb5b4765248be7725fb8132ea7cc12ce76c,Admin User,admin,AU,2026-04-02T10:24:53Z,active
-user_member,jane,jane@example.com,scrypt$4d9eb07dfca44f773133491d275daf42$8d745a7cdc62af7463e3cf45c2c87213a36b3b2887bd9efef4637ec959023064aea2fbca34b6e1e41bb20b6463b3cdb5b4765248be7725fb8132ea7cc12ce76c,Jane Member,member,JM,2026-04-02T10:24:53Z,active
+user_admin,admin,admin@example.com,admin12345,Admin User,admin,AU,2026-04-03T07:45:00Z,active
+user_ali,ali,ali@example.com,ali12345,Ali Turab,member,AT,2026-04-03T07:45:00Z,active
+user_sara,sara,sara@example.com,sara12345,Sara Khan,member,SK,2026-04-03T07:45:00Z,active

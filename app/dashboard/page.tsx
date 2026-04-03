@@ -6,10 +6,13 @@ import { isToday, isPast, parseISO } from "date-fns";
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   const tasks = await listTasks();
-  const myTasks = tasks.filter((t) => t.assignee_id === user?.id);
+  const scopedTasks = user?.id.startsWith("guest_")
+    ? tasks.filter((t) => t.reporter_id === user.id)
+    : tasks;
+  const myTasks = scopedTasks.filter((t) => t.assignee_id === user?.id || t.reporter_id === user?.id);
   const dueToday = myTasks.filter((t) => t.due_date && isToday(parseISO(t.due_date)));
   const overdue = myTasks.filter((t) => t.due_date && isPast(parseISO(t.due_date)) && t.status !== "Done");
-  const recentlyUpdated = [...tasks].sort((a, b) => b.updated_at.localeCompare(a.updated_at)).slice(0, 6);
+  const recentlyUpdated = [...scopedTasks].sort((a, b) => b.updated_at.localeCompare(a.updated_at)).slice(0, 6);
 
   return (
     <main className="grid">

@@ -4,6 +4,7 @@ import { findUserByUsernameOrEmail, getUserById } from "./users";
 import { User } from "./types";
 import { verifyPassword } from "./password";
 import { decodeSessionToken, encodeSessionToken, SESSION_MAX_AGE } from "./session-token";
+import { randomId } from "./utils";
 
 const COOKIE_NAME = "session_token";
 
@@ -26,6 +27,12 @@ export async function createSession(userId: string) {
   });
 }
 
+export async function createGuestSession() {
+  const guestId = `guest_${randomId("user")}`;
+  await createSession(guestId);
+  return guestId;
+}
+
 export async function clearSession() {
   const store = await cookies();
   store.delete(COOKIE_NAME);
@@ -37,6 +44,19 @@ export async function getCurrentUser(): Promise<User | null> {
   if (!token) return null;
   const parsed = decodeSessionToken(token);
   if (!parsed) return null;
+  if (parsed.userId.startsWith("guest_")) {
+    return {
+      id: parsed.userId,
+      username: "guest",
+      email: "",
+      password_hash: "",
+      full_name: "Guest User",
+      role: "member",
+      avatar: "G",
+      created_at: new Date().toISOString(),
+      status: "active"
+    };
+  }
   return getUserById(parsed.userId);
 }
 
@@ -45,5 +65,18 @@ export async function getSessionUserFromRequest(req: NextRequest) {
   if (!token) return null;
   const parsed = decodeSessionToken(token);
   if (!parsed) return null;
+  if (parsed.userId.startsWith("guest_")) {
+    return {
+      id: parsed.userId,
+      username: "guest",
+      email: "",
+      password_hash: "",
+      full_name: "Guest User",
+      role: "member",
+      avatar: "G",
+      created_at: new Date().toISOString(),
+      status: "active"
+    };
+  }
   return getUserById(parsed.userId);
 }

@@ -1,6 +1,5 @@
 import fs from "fs/promises";
 import path from "path";
-import { hashPassword } from "../lib/password";
 
 async function write(file: string, content: string) {
   await fs.mkdir(path.dirname(file), { recursive: true });
@@ -9,12 +8,12 @@ async function write(file: string, content: string) {
 
 async function main() {
   const now = new Date().toISOString();
-  const hash = hashPassword("admin12345");
 
   const users = [
     "id,username,email,password_hash,full_name,role,avatar,created_at,status",
-    `user_admin,admin,admin@example.com,${hash},Admin User,admin,AU,${now},active`,
-    `user_member,jane,jane@example.com,${hash},Jane Member,member,JM,${now},active`
+    `user_admin,admin,admin@example.com,admin12345,Admin User,admin,AU,${now},active`,
+    `user_ali,ali,ali@example.com,ali12345,Ali Turab,member,AT,${now},active`,
+    `user_sara,sara,sara@example.com,sara12345,Sara Khan,member,SK,${now},active`
   ].join("\n");
 
   const projects = [

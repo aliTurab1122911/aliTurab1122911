@@ -15,7 +15,7 @@ A lightweight, Jira-inspired team task board for small teams.
 ## Stack
 - Next.js App Router + TypeScript
 - Node fs + Papa Parse for CSV storage
-- Node.js crypto scrypt for password hashing
+- Plain-text demo passwords for simplicity (upgrade to hashing before production)
 - date-fns for date handling
 
 ## Quick start
@@ -33,9 +33,10 @@ A lightweight, Jira-inspired team task board for small teams.
    npm run dev
    ```
 
-Seed login:
-- username: `admin`
-- password: `admin12345`
+Seed logins:
+- `admin / admin12345`
+- `ali / ali12345`
+- `sara / sara12345`
 
 ## Deployment notes
 Because this app writes to local CSV files, deploy it to a host with persistent filesystem.

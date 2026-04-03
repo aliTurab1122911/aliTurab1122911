@@ -63,12 +63,12 @@ export async function POST(req: NextRequest) {
   }
 
   const parsed = createTaskSchema.safeParse({
-    project_id: String(form.get("project_id") ?? ""),
+    project_id: user.id.startsWith("guest_") ? "guest_project" : String(form.get("project_id") ?? ""),
     title: String(form.get("title") ?? "").trim(),
     description: String(form.get("description") ?? "").trim(),
     status: String(form.get("status") ?? "Backlog"),
     priority: String(form.get("priority") ?? "Medium"),
-    assignee_id: String(form.get("assignee_id") ?? user.id),
+    assignee_id: user.id.startsWith("guest_") ? user.id : String(form.get("assignee_id") ?? user.id),
     due_date: String(form.get("due_date") ?? ""),
     start_date: String(form.get("start_date") ?? ""),
     tags: String(form.get("tags") ?? "")

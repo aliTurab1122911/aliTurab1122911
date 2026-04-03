@@ -44,3 +44,9 @@ export async function removeTask(taskId: string, actorUserId: string) {
   await deleteCsvRow<Task>(FILE, taskId);
   await recordActivity({ task_id: taskId, user_id: actorUserId, action: "deleted", old_value: JSON.stringify(existing), new_value: "" });
 }
+
+export async function clearGuestTasks(guestUserId: string) {
+  const tasks = await listTasks();
+  const toDelete = tasks.filter((task) => task.reporter_id === guestUserId).map((task) => task.id);
+  await Promise.all(toDelete.map((taskId) => deleteCsvRow<Task>(FILE, taskId)));
+}

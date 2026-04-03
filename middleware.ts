@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeSessionToken } from "@/lib/session-token";
 
-const publicPaths = ["/login", "/api/auth/login", "/api/auth/logout", "/_next", "/favicon.ico"];
+const publicPaths = ["/login", "/api/auth/login", "/api/auth/logout", "/api/auth/guest", "/_next", "/favicon.ico"];
 
 export function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;

@@ -7,6 +7,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
   const params = await searchParams;
   const projects = await listProjects();
   const user = await getCurrentUser();
+  const isGuest = user?.id.startsWith("guest_");
 
   return (
     <main className="grid">
@@ -14,7 +15,10 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
         <h1>Projects</h1>
         {params.error ? <div className="alert">Please fill all required fields.</div> : null}
         <div className="grid">
-          {projects.map((project) => (
+          {(isGuest
+            ? [{ id: "guest_project", key: "GUEST", name: "My Guest Project", description: "Temporary session project board" }]
+            : projects
+          ).map((project) => (
             <div key={project.id} className="card">
               <strong>{project.key} — {project.name}</strong>
               <p>{project.description}</p>
@@ -24,7 +28,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
         </div>
       </section>
 
-      {user && canManageProjects(user) ? (
+      {user && !isGuest && canManageProjects(user) ? (
         <section className="card">
           <h2>Create Project</h2>
           <form action="/api/projects" method="post">

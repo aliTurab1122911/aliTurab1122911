@@ -8,11 +8,16 @@ import { listUsers } from "@/lib/users";
 
 export default async function ProjectBoardPage({ params }: { params: Promise<{ projectId: string }> }) {
   const { projectId } = await params;
-  const project = await getProjectById(projectId);
+  const [tasks, users, user] = await Promise.all([listTasks(), listUsers(), getCurrentUser()]);
+  const isGuest = user?.id.startsWith("guest_");
+  const project = isGuest
+    ? { id: "guest_project", key: "GUEST", name: "My Guest Project", description: "Temporary guest session board" }
+    : await getProjectById(projectId);
   if (!project) notFound();
 
-  const [tasks, users, user] = await Promise.all([listTasks(), listUsers(), getCurrentUser()]);
-  const projectTasks = tasks.filter((t) => t.project_id === project.id);
+  const projectTasks = isGuest
+    ? tasks.filter((t) => t.reporter_id === user?.id)
+    : tasks.filter((t) => t.project_id === project.id);
 
   return (
     <main className="grid">
@@ -24,7 +29,7 @@ export default async function ProjectBoardPage({ params }: { params: Promise<{ p
       <section className="card">
         <h2>Create Task</h2>
         <form action="/api/tasks" method="post" className="grid grid-2">
-          <input type="hidden" name="project_id" value={project.id} />
+          <input type="hidden" name="project_id" value={isGuest ? "guest_project" : project.id} />
           <div>
             <label>Title</label>
             <input name="title" required />

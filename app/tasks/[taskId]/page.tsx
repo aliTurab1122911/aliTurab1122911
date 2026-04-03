@@ -3,12 +3,17 @@ import { listActivityForTask } from "@/lib/activity";
 import { TASK_PRIORITIES, TASK_STATUSES } from "@/lib/constants";
 import { getTaskById } from "@/lib/tasks";
 import { listUsers } from "@/lib/users";
+import { getCurrentUser } from "@/lib/auth";
 
 export default async function TaskDetailPage({ params, searchParams }: { params: Promise<{ taskId: string }>; searchParams: Promise<{ error?: string }> }) {
   const { taskId } = await params;
   const s = await searchParams;
   const task = await getTaskById(taskId);
   if (!task) notFound();
+  const user = await getCurrentUser();
+  if (user?.id.startsWith("guest_") && task.reporter_id !== user.id) {
+    notFound();
+  }
 
   const [users, activity] = await Promise.all([listUsers(), listActivityForTask(task.id)]);
 

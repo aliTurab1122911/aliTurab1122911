@@ -6,8 +6,9 @@ import { listTasks } from "@/lib/tasks";
 export default async function CalendarPage({ searchParams }: { searchParams: Promise<{ mine?: string; project?: string; status?: string }> }) {
   const params = await searchParams;
   const [user, tasks, projects] = await Promise.all([getCurrentUser(), listTasks(), listProjects()]);
+  const isGuest = user?.id.startsWith("guest_");
 
-  let filtered = tasks;
+  let filtered = isGuest ? tasks.filter((t) => t.reporter_id === user?.id) : tasks;
   if (params.mine === "1" && user) filtered = filtered.filter((t) => t.assignee_id === user.id);
   if (params.project) filtered = filtered.filter((t) => t.project_id === params.project);
   if (params.status) filtered = filtered.filter((t) => t.status === params.status);
@@ -28,7 +29,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
             <label>Project</label>
             <select name="project" defaultValue={params.project ?? ""}>
               <option value="">All projects</option>
-              {projects.map((p) => (<option key={p.id} value={p.id}>{p.key}</option>))}
+              {(isGuest ? [{ id: "guest_project", key: "GUEST" }] : projects).map((p) => (<option key={p.id} value={p.id}>{p.key}</option>))}
             </select>
           </div>
           <div>
