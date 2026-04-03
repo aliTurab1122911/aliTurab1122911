@@ -15,7 +15,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <label>Password</label>
           <input type="password" name="password" required />
           <div style={{ marginTop: ".8rem" }}>
-            <button type="submit" className="button-34">Sign in</button>
+            <button type="submit" className="button-84">Sign in</button>
           </div>
         </form>
         <small className="muted">Try: admin/admin12345, ali/ali12345, sara/sara12345</small>
@@ -25,7 +25,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <h1>Guest Login</h1>
         <p className="muted">Guest mode is temporary. Data is attached to this session and cleared on logout.</p>
         <form action="/api/auth/guest" method="post">
-          <button type="submit" className="button-34">Continue as Guest</button>
+          <button type="submit" className="button-84">Continue as Guest</button>
         </form>
       </section>
     </main>

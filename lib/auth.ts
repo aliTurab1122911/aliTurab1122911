@@ -51,10 +51,10 @@ export async function getCurrentUser(): Promise<User | null> {
       email: "",
       password_hash: "",
       full_name: "Guest User",
-      role: "member",
+      role: "member" as const,
       avatar: "G",
       created_at: new Date().toISOString(),
-      status: "active"
+      status: "active" as const
     };
   }
   return getUserById(parsed.userId);
@@ -72,10 +72,10 @@ export async function getSessionUserFromRequest(req: NextRequest) {
       email: "",
       password_hash: "",
       full_name: "Guest User",
-      role: "member",
+      role: "member" as const,
       avatar: "G",
       created_at: new Date().toISOString(),
-      status: "active"
+      status: "active" as const
     };
   }
   return getUserById(parsed.userId);

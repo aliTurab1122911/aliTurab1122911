@@ -19,7 +19,7 @@ async function ensureFile(filePath: string, headers: string[]) {
   }
 }
 
-export async function readCsv<T extends Record<string, string>>(filePath: string): Promise<T[]> {
+export async function readCsv<T>(filePath: string): Promise<T[]> {
   const raw = await fs.readFile(filePath, "utf8");
   const parsed = Papa.parse<T>(raw, { header: true, skipEmptyLines: true, transformHeader: (h) => h.trim() });
   if (parsed.errors.length) {
@@ -28,7 +28,7 @@ export async function readCsv<T extends Record<string, string>>(filePath: string
   return parsed.data;
 }
 
-export async function writeCsv<T extends Record<string, string>>(filePath: string, rows: T[]): Promise<void> {
+export async function writeCsv<T>(filePath: string, rows: T[]): Promise<void> {
   const csv = Papa.unparse(rows);
   const tmpPath = `${filePath}.tmp`;
   await fs.writeFile(tmpPath, `${csv}\n`, "utf8");
@@ -42,7 +42,7 @@ function queueWrite(filePath: string, fn: () => Promise<void>) {
   return run;
 }
 
-export async function appendCsv<T extends Record<string, string>>(filePath: string, row: T) {
+export async function appendCsv<T>(filePath: string, row: T) {
   return queueWrite(filePath, async () => {
     const rows = await readCsv<T>(filePath);
     rows.push(row);
@@ -50,7 +50,7 @@ export async function appendCsv<T extends Record<string, string>>(filePath: stri
   });
 }
 
-export async function updateCsvRow<T extends Record<string, string>>(filePath: string, rowId: string, patch: Partial<T>) {
+export async function updateCsvRow<T extends { id: string }>(filePath: string, rowId: string, patch: Partial<T>) {
   return queueWrite(filePath, async () => {
     const rows = await readCsv<T>(filePath);
     const idx = rows.findIndex((r) => r.id === rowId);
@@ -62,7 +62,7 @@ export async function updateCsvRow<T extends Record<string, string>>(filePath: s
   });
 }
 
-export async function deleteCsvRow<T extends Record<string, string>>(filePath: string, rowId: string) {
+export async function deleteCsvRow<T extends { id: string }>(filePath: string, rowId: string) {
   return queueWrite(filePath, async () => {
     const rows = await readCsv<T>(filePath);
     await writeCsv(filePath, rows.filter((r) => r.id !== rowId));
