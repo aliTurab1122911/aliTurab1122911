@@ -37,9 +37,9 @@ export async function writeCsv<T extends Record<string, string>>(filePath: strin
 
 function queueWrite(filePath: string, fn: () => Promise<void>) {
   const prev = writeQueues.get(filePath) ?? Promise.resolve();
-  const next = prev.then(fn).catch(() => undefined);
-  writeQueues.set(filePath, next);
-  return next;
+  const run = prev.catch(() => undefined).then(fn);
+  writeQueues.set(filePath, run.catch(() => undefined));
+  return run;
 }
 
 export async function appendCsv<T extends Record<string, string>>(filePath: string, row: T) {
