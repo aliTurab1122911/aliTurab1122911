@@ -1,2 +1,0 @@
-id,project_id,title,description,status,priority,assignee_id,reporter_id,due_date,start_date,tags,created_at,updated_at
-task_demo,proj_alpha,Create kickoff board,Seed first backlog items,To Do,Medium,user_member,user_admin,2026-04-10,2026-04-02,"setup,onboard",2026-04-02T10:24:53Z,2026-04-02T10:24:53Z

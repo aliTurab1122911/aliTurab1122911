@@ -1,4 +1,0 @@
-id,username,email,password_hash,full_name,role,avatar,created_at,status
-user_admin,admin,admin@example.com,admin12345,Admin User,admin,AU,2026-04-03T07:45:00Z,active
-user_ali,ali,ali@example.com,ali12345,Ali Turab,member,AT,2026-04-03T07:45:00Z,active
-user_sara,sara,sara@example.com,sara12345,Sara Khan,member,SK,2026-04-03T07:45:00Z,active
