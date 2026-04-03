@@ -4,10 +4,15 @@ const MAX_AGE = 60 * 60 * 24 * 7;
 
 function getSecret() {
   const secret = process.env.SESSION_SECRET;
-  if (!secret) {
-    throw new Error("Missing SESSION_SECRET");
+  if (secret) {
+    return secret;
   }
-  return secret;
+
+  if (process.env.NODE_ENV !== "production") {
+    return "dev-insecure-session-secret-change-me";
+  }
+
+  throw new Error("Missing SESSION_SECRET");
 }
 
 function sign(payload: string) {
